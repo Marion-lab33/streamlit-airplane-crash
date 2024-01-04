@@ -2,20 +2,19 @@ import pandas as pd
 import streamlit as st
 import seaborn as sns
 
-link = "https://raw.githubusercontent.com/murpi/wilddata/master/quests/cars.csv"
-cars = pd.read_csv(link)
-cars['continent'] = cars['continent'].str.replace(".", "").str.replace(" ", "")
+df = pd.read_csv("\assets\Plane_crashes.csv")
 
 # Titre de la page
-st.title("Welcome to :blue[Marion\'s] app")
+st.title("Coucou Léa !!")
 
-# Ajoute des boutons dans la barre latérale
-with st.sidebar:
-    st.header('Filter by Region')
-    all_button = st.button("All")
-    us_button = st.button("US")
-    europe_button = st.button("Europe")
-    japan_button = st.button("Japan")
+# Header part 1
+st.header('Partie 1 !!!!', divider='rainbow')
+
+# Liste déroulante
+option = st.selectbox(
+    'Avec quelle variable voulez-vous comparer le nombre de victimes ?',
+    ('Région', 'Lieu de crash', 'Mobile phone'))
+
 
 # Filtre le DataFrame en fonction du bouton sélectionné
 if us_button:
@@ -29,12 +28,9 @@ elif all_button:
 else:
     filtered_cars = cars
 
-# Header part 1
-st.header('DataFrame Cars', divider='rainbow')
-st.write(filtered_cars)
 
 # Header part 2
-st.header('Heatmap', divider='rainbow')
+st.header('Partie 2', divider='rainbow')
 viz_correlation = sns.heatmap(filtered_cars.select_dtypes(include=['int', 'float']).corr(), center=0, cmap=sns.color_palette("vlag", as_cmap=True))
 st.pyplot(viz_correlation.figure)
 
